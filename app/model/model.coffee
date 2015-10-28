@@ -268,9 +268,8 @@ updatePulldowns = () ->
     $('#chart-1-selector').append createSelectOption(option)
     $('#chart-2-selector').append createSelectOption(option)
 
-  chart1?.setData chartTypes[authoredOptions[0]]
-  chart2?.setData chartTypes[authoredOptions[0]]
-  resetAndDrawCharts()
+  setChartType chart1, chartTypes[authoredOptions[0]], 1
+  setChartType chart2, chartTypes[authoredOptions[0]], 2
 
   if authoredOptions.length < 2
     $('#chart-1-selector').hide()
@@ -304,10 +303,23 @@ updateTimeLimitPopup = ->
     for message in window.CONFIG.timeLimitMessage
       $(".time-limit-dialog>.content").append $("<div>#{message}</div>")
 
+updateDateString = ->
+  if window.CONFIG?.chart?.timeUnits?
+    $('.xAxisLabel').html(window.CONFIG.chart.timeUnits)
+
 processConfig = ->
   updateAlleleFrequencies()
   updatePulldowns()
   updateTimeLimitPopup()
+  updateDateString()
+
+setChartType = (chart, type, n) ->
+  chart?.setData type
+  chart?.reset()
+  if type[0].timeBased
+    $("#container-#{n} .xAxisLabel").show()
+  else
+    $("#container-#{n} .xAxisLabel").hide()
 
 $ ->
   model.isFieldModel = !/[^\/]*html/.exec(document.location.href) or /[^\/]*html/.exec(document.location.href)[0] == "field.html"
@@ -371,21 +383,10 @@ $ ->
     chart2?.recalculateLength()
 
   $('#chart-1-selector').change ->
-    chart1.setData chartTypes[this.value]
-    chart1.reset()
-    console.log chartTypes[this.value]
-    if chartTypes[this.value][0].timeBased
-      $('#container-1 .xAxisLabel').show()
-    else
-      $('#container-1 .xAxisLabel').hide()
+    setChartType chart1, chartTypes[this.value], 1
 
   $('#chart-2-selector').change ->
-    chart2.setData chartTypes[this.value]
-    chart2.reset()
-    if chartTypes[this.value][0].timeBased
-      $('#container-2 .xAxisLabel').show()
-    else
-      $('#container-2 .xAxisLabel').hide()
+    setChartType chart2, chartTypes[this.value], 2
 
   configDefaults =
     populationGenetics:
