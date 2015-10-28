@@ -180,11 +180,7 @@ module.exports = Chart = Chart = (function() {
         column.count = newData[column.property];
       }
     } else {
-      this._time++;
-      if (this._time % 2 !== 0) {
-        return;
-      }
-      timeChartTime = this._time / 2;
+      timeChartTime = this._time;
       datum = helpers.clone(this._data[0]);
       datum.category = timeChartTime;
       datum.count = newData[this._timeProp.property];
@@ -203,6 +199,7 @@ module.exports = Chart = Chart = (function() {
         }
       }
       this._extendOpenPeriods();
+      this._time++;
     }
     return this.chart.validateData();
   };
@@ -266,8 +263,8 @@ module.exports = Chart = Chart = (function() {
     guide.color = '#999999';
     guide.fillColor = 'hsl(200, 100%, 92%)';
     guide.fillAlpha = 0.4;
-    guide.category = '' + Math.ceil(this._time / 2);
-    guide.toCategory = '' + Math.ceil(this._time / 2);
+    guide.category = '' + Math.ceil(this._time);
+    guide.toCategory = '' + Math.ceil(this._time);
     guide.expand = true;
     guide.label = 'Sugary food added';
     guide.position = 'left';
@@ -290,7 +287,7 @@ module.exports = Chart = Chart = (function() {
     for (id in _ref) {
       if (!__hasProp.call(_ref, id)) continue;
       guide = _ref[id];
-      guide.toCategory = '' + Math.ceil(this._time / 2);
+      guide.toCategory = '' + Math.ceil(this._time);
     }
     leftDate = this._data[0].category;
     if (leftDate > 1) {
@@ -420,7 +417,8 @@ module.exports = env;
 });
 
 ;require.register("model/model", function(exports, require, module) {
-var Agent, BasicAnimal, Chart, Environment, Events, Interactive, Species, ToolButton, Trait, biologicaSandratSpecies, chart1, chart2, chartTypes, chowSpecies, defaultChartTypes, env, environmentType, fastRats, fieldEnvironment, geneInfo, helpers, pensEnvironment, processConfig, resetAndDrawCharts, slowRats, updateAlleleFrequencies, updateCharts, updatePulldowns, updateTimeLimitPopup, _ref;
+var Agent, BasicAnimal, Chart, Environment, Events, Interactive, Species, ToolButton, Trait, biologicaSandratSpecies, chart1, chart2, chartTypes, chowSpecies, defaultChartTypes, env, environmentType, fastRats, fieldEnvironment, geneInfo, helpers, pensEnvironment, processConfig, resetAndDrawCharts, slowRats, updateAlleleFrequencies, updateCharts, updatePulldowns, updateTimeLimitPopup, _ref,
+  _this = this;
 
 helpers = require('helpers');
 
@@ -469,8 +467,7 @@ env = (function() {
 
 window.model = {
   run: function() {
-    var agent, _i, _ref1, _ref2,
-      _this = this;
+    var agent, _i, _ref1, _ref2;
     environmentType = ((_ref1 = window.CONFIG) != null ? _ref1.environment : void 0) != null ? window.CONFIG.environment : "pens";
     env = (function() {
       switch (environmentType) {
@@ -523,31 +520,12 @@ window.model = {
         height: Math.round(this.env.height / 2)
       }
     };
+    this.stopDate = 0;
+    this.timeGraphInterval = this.graphInterval * 2;
     this.setupEnvironment();
     this.isSetUp = true;
-    this.stopDate = 0;
     this.secondsPerSample = 1;
-    this.graphInterval = Math.ceil(this.targetFPS() * this.secondsPerSample);
-    Events.addEventListener(Environment.EVENTS.RESET, function() {
-      _this.setupEnvironment();
-      $('.time-limit-dialog').fadeOut(300);
-      $('.chow-toggle').removeClass('on');
-      return resetAndDrawCharts();
-    });
-    Events.addEventListener(Environment.EVENTS.START, function() {
-      return $('.time-limit-dialog').fadeOut(300);
-    });
-    return Events.addEventListener(Environment.EVENTS.STEP, function() {
-      _this.countRatsInAreas();
-      if (_this.env.date % _this.graphInterval === 1) {
-        updateCharts();
-      }
-      if (_this.stopDate > 0 && _this.env.date === _this.stopDate) {
-        _this.env.stop();
-        updateCharts();
-        return _this._timesUp();
-      }
-    });
+    return this.graphInterval = Math.ceil(this.targetFPS() * this.secondsPerSample);
   },
   targetFPS: function() {
     return 1000 / (this.env != null ? this.env._runLoopDelay : Environment.DEFAULT_RUN_LOOP_DELAY);
@@ -647,7 +625,8 @@ window.model = {
       }
     };
     if (((_ref4 = window.CONFIG) != null ? _ref4.timeLimit : void 0) != null) {
-      this.stopDate = Math.ceil(window.CONFIG.timeLimit * model.targetFPS());
+      this.stopDate = Math.floor(window.CONFIG.timeLimit * model.targetFPS());
+      this.timeGraphInterval = Math.floor(this.stopDate / 29);
     }
     return resetAndDrawCharts();
   },
@@ -678,7 +657,6 @@ window.model = {
   },
   createTraits: function(alleles) {
     var blueAlleles, m, re, redAlleles, traits, yellowAlleles;
-    console.log("creating traits from " + alleles);
     traits = [];
     redAlleles = [];
     yellowAlleles = [];
@@ -770,6 +748,26 @@ window.model = {
   }
 };
 
+Events.addEventListener(Environment.EVENTS.RESET, function() {
+  model.setupEnvironment();
+  $('.time-limit-dialog').fadeOut(300);
+  $('.chow-toggle').removeClass('on');
+  return resetAndDrawCharts();
+});
+
+Events.addEventListener(Environment.EVENTS.START, function() {
+  return $('.time-limit-dialog').fadeOut(300);
+});
+
+Events.addEventListener(Environment.EVENTS.STEP, function() {
+  model.countRatsInAreas();
+  updateCharts();
+  if (model.stopDate > 0 && model.env.date === model.stopDate) {
+    model.env.stop();
+    return model._timesUp();
+  }
+});
+
 chart1 = null;
 
 chart2 = null;
@@ -782,10 +780,15 @@ resetAndDrawCharts = function() {
 };
 
 updateCharts = function() {
-  if (chart1 != null) {
+  var updateStaticCharts, updateTimeCharts;
+  updateStaticCharts = model.env.date % model.graphInterval === 1;
+  updateTimeCharts = model.env.date % model.timeGraphInterval === 1;
+  if (((chart1 != null ? chart1._timeBased : void 0) && updateTimeCharts) || (!(chart1 != null ? chart1._timeBased : void 0) && updateStaticCharts)) {
     chart1.update();
   }
-  return chart2 != null ? chart2.update() : void 0;
+  if (((chart2 != null ? chart2._timeBased : void 0) && updateTimeCharts) || (!(chart2 != null ? chart2._timeBased : void 0) && updateStaticCharts)) {
+    return chart2.update();
+  }
 };
 
 chartTypes = {
@@ -912,9 +915,7 @@ updateAlleleFrequencies = function() {
 
 updateTimeLimitPopup = function() {
   var message, _i, _len, _ref1, _ref2, _ref3, _results;
-  console.log("will do");
   if (((_ref1 = window.CONFIG) != null ? _ref1.timeLimitTitle : void 0) != null) {
-    console.log("setting title to " + window.CONFIG.timeLimitTitle);
     $(".time-limit-dialog>.title").html(window.CONFIG.timeLimitTitle);
   }
   if ((((_ref2 = window.CONFIG) != null ? _ref2.timeLimitMessage : void 0) != null) && window.CONFIG.timeLimitMessage.length) {
@@ -1012,11 +1013,22 @@ $(function() {
   });
   $('#chart-1-selector').change(function() {
     chart1.setData(chartTypes[this.value]);
-    return chart1.reset();
+    chart1.reset();
+    console.log(chartTypes[this.value]);
+    if (chartTypes[this.value][0].timeBased) {
+      return $('#container-1 .xAxisLabel').show();
+    } else {
+      return $('#container-1 .xAxisLabel').hide();
+    }
   });
   $('#chart-2-selector').change(function() {
     chart2.setData(chartTypes[this.value]);
-    return chart2.reset();
+    chart2.reset();
+    if (chartTypes[this.value][0].timeBased) {
+      return $('#container-2 .xAxisLabel').show();
+    } else {
+      return $('#container-2 .xAxisLabel').hide();
+    }
   });
   configDefaults = {
     populationGenetics: {
@@ -1128,7 +1140,7 @@ $(function() {
         $('.validation-feedback').removeClass('error').text('OK!');
         window.CONFIG = newConfig;
         processConfig();
-        document.getElementById('environment').innerHTML = "";
+        document.getElementById("environment").children[2].remove();
         return model.run();
       }
     });
