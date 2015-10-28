@@ -373,10 +373,19 @@ $ ->
   $('#chart-1-selector').change ->
     chart1.setData chartTypes[this.value]
     chart1.reset()
+    console.log chartTypes[this.value]
+    if chartTypes[this.value][0].timeBased
+      $('#container-1 .xAxisLabel').show()
+    else
+      $('#container-1 .xAxisLabel').hide()
 
   $('#chart-2-selector').change ->
     chart2.setData chartTypes[this.value]
     chart2.reset()
+    if chartTypes[this.value][0].timeBased
+      $('#container-2 .xAxisLabel').show()
+    else
+      $('#container-2 .xAxisLabel').hide()
 
   configDefaults =
     populationGenetics:
