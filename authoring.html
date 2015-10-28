@@ -41,7 +41,8 @@
           }
         },
         chart: {
-          options: ["diabetes", "weight", "risk", "diabetesTime"]
+          options: ["diabetes", "weight", "risk", "diabetesTime"],
+          timeUnits: "Months"
         }
       };
     </script>
@@ -70,11 +71,11 @@
 
       <div id="toolbar-options">
         <div>
-          <input type="checkbox" id="view-prone-check" value="prone"> Show diabetes risk <img style="width: 19px;" src="images/agents/prone-stack.png"><br>
-          <input type="checkbox" id="view-diabetic-check" value="prone"> Show rats with diabetes <img style="width: 19px;" src="images/agents/diabetic-stack.png">
+          <input type="checkbox" id="view-prone-check" value="prone"> Show diabetes risk <img style="width: 19px;" src="images/ui/circle_yellow.png"><br>
+          <input type="checkbox" id="view-sex-check" value="prone"> Show females and males <img style="width: 36px;" src="images/ui/circle_maleFemale.png">
         </div>
         <div>
-          <input type="checkbox" id="view-sex-check" value="prone"> Show females and males <img style="width: 19px;" src="images/agents/female-stack.png"> <img style="width: 19px;" src="images/agents/male-stack.png">
+          <input type="checkbox" id="view-diabetic-check" value="prone"> Show rats with diabetes <img style="width: 19px;" src="images/ui/circle_red.png">
         </div>
       </div>
 

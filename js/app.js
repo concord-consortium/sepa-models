@@ -417,7 +417,7 @@ module.exports = env;
 });
 
 ;require.register("model/model", function(exports, require, module) {
-var Agent, BasicAnimal, Chart, Environment, Events, Interactive, Species, ToolButton, Trait, biologicaSandratSpecies, chart1, chart2, chartTypes, chowSpecies, defaultChartTypes, env, environmentType, fastRats, fieldEnvironment, geneInfo, helpers, pensEnvironment, processConfig, resetAndDrawCharts, slowRats, updateAlleleFrequencies, updateCharts, updatePulldowns, updateTimeLimitPopup, _ref,
+var Agent, BasicAnimal, Chart, Environment, Events, Interactive, Species, ToolButton, Trait, biologicaSandratSpecies, chart1, chart2, chartTypes, chowSpecies, defaultChartTypes, env, environmentType, fastRats, fieldEnvironment, geneInfo, helpers, pensEnvironment, processConfig, resetAndDrawCharts, setChartType, slowRats, updateAlleleFrequencies, updateCharts, updateDateString, updatePulldowns, updateTimeLimitPopup, _ref,
   _this = this;
 
 helpers = require('helpers');
@@ -864,13 +864,8 @@ updatePulldowns = function() {
     $('#chart-1-selector').append(createSelectOption(option));
     $('#chart-2-selector').append(createSelectOption(option));
   }
-  if (chart1 != null) {
-    chart1.setData(chartTypes[authoredOptions[0]]);
-  }
-  if (chart2 != null) {
-    chart2.setData(chartTypes[authoredOptions[0]]);
-  }
-  resetAndDrawCharts();
+  setChartType(chart1, chartTypes[authoredOptions[0]], 1);
+  setChartType(chart2, chartTypes[authoredOptions[0]], 2);
   if (authoredOptions.length < 2) {
     $('#chart-1-selector').hide();
     return $('#chart-2-selector').hide();
@@ -930,10 +925,32 @@ updateTimeLimitPopup = function() {
   }
 };
 
+updateDateString = function() {
+  var _ref1, _ref2;
+  if (((_ref1 = window.CONFIG) != null ? (_ref2 = _ref1.chart) != null ? _ref2.timeUnits : void 0 : void 0) != null) {
+    return $('.xAxisLabel').html(window.CONFIG.chart.timeUnits);
+  }
+};
+
 processConfig = function() {
   updateAlleleFrequencies();
   updatePulldowns();
-  return updateTimeLimitPopup();
+  updateTimeLimitPopup();
+  return updateDateString();
+};
+
+setChartType = function(chart, type, n) {
+  if (chart != null) {
+    chart.setData(type);
+  }
+  if (chart != null) {
+    chart.reset();
+  }
+  if (type[0].timeBased) {
+    return $("#container-" + n + " .xAxisLabel").show();
+  } else {
+    return $("#container-" + n + " .xAxisLabel").hide();
+  }
 };
 
 $(function() {
@@ -1012,23 +1029,10 @@ $(function() {
     return chart2 != null ? chart2.recalculateLength() : void 0;
   });
   $('#chart-1-selector').change(function() {
-    chart1.setData(chartTypes[this.value]);
-    chart1.reset();
-    console.log(chartTypes[this.value]);
-    if (chartTypes[this.value][0].timeBased) {
-      return $('#container-1 .xAxisLabel').show();
-    } else {
-      return $('#container-1 .xAxisLabel').hide();
-    }
+    return setChartType(chart1, chartTypes[this.value], 1);
   });
   $('#chart-2-selector').change(function() {
-    chart2.setData(chartTypes[this.value]);
-    chart2.reset();
-    if (chartTypes[this.value][0].timeBased) {
-      return $('#container-2 .xAxisLabel').show();
-    } else {
-      return $('#container-2 .xAxisLabel').hide();
-    }
+    return setChartType(chart2, chartTypes[this.value], 2);
   });
   configDefaults = {
     populationGenetics: {
