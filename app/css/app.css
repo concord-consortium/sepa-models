@@ -1,9 +1,14 @@
+body {
+  font-family: Arial;
+}
+
 /* START rules to put the controls on the left */
 #environment {
   position: relative;
   overflow: visible;
   padding: 0;
   margin: -8px;
+  border-right: 1px solid;
 }
 
 #environment canvas {
@@ -20,37 +25,56 @@
   left: 0px;
   top: 450px;
   width: 936px;
-  height: 58px !important;
-  background-color: #CCC;
+  height: 50px !important;
+  background-color: #EFCA9A;
+  font-size: 15px;
 }
 
 #environment .toolbar .button {
   clear: none;
   width: 41px;
   height: 41px;
+  padding: 0;
+  margin-top: 5px;
+  background-image: none;
+  background-color: #EFCA9A;
+  box-shadow: none;
+  webkit-box-shadow: none;
+  border-radius: 5px;
 }
 
-#environment .toolbar .button div {
-  width: 36px;
-  height: 36px;
+#environment .toolbar .button:hover {
+  box-shadow: 0 0 2px #D09845;
 }
 
-#environment .toolbar .button div.info-tool {
-  width: 40px;
-  height: 40px;
+#environment .toolbar .button:active,
+#environment .toolbar .button.modal:active,
+#environment .toolbar .button.modal-active,
+#environment .toolbar .button.modal-active:active {
+  background-color: #D2A46A;
+  background-image: none;
 }
 
+#environment .toolbar .button div,
+#environment .toolbar .button div.info-tool,
 #environment .toolbar .button div.carry-tool {
-  background-size: 31px;
-  background-position-x: 3px;
-  background-position-y: 3px;
+  width: 42px;
+  height: 42px;
+  background-repeat: no-repeat;
+  top: 0;
+  left: 0;
+  cursor: pointer !important;
+}
+
+#environment .toolbar .button div:active {
+  background-position: 0 0;
 }
 /* END rules for putting the controls on the left */
 
 #toolbar-options {
   position: absolute;
-  top: 444px;
-  left: 240px;
+  top: 440px;
+  left: 233px;
   padding: 4px;
   margin: 6px;
   margin-left: 0px;
@@ -58,12 +82,13 @@
 }
 
 #toolbar-options>div {
-  padding-left: 11px;
+  margin-left: -38px;
 }
 
 #toolbar-options img {
   position: relative;
-  top: 5px;
+  top: 4px;
+  margin-left: 4px;
 }
 
 .time-limit-dialog {
@@ -242,8 +267,25 @@ span.allele.blue {
 .agent-property {
   clear: both;
 }
+
+#environment .toolbar .button div.play {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABa0lEQVRYhe3VT07CQBTH8d8bumGlN5AbCLGs7Q00xuK2KzcGyg3kBiLEjTcwNYonQNc0od6g3gBXbKDPBX9iDMQw89qEZD77ef1m0tcClmVZlrX3mn799No/OSjymUrnEBF7ZVDaunTPpIO20QoFABAdkqJB6LvDm4vakWDTRvqhK0SeUyolrYZ7K9CzlXkosLhdUCf06+PmVe1YZOYfMqErhKpiJwkb7p30ssmGrlG7TCqRXLacQgEAFVI0CBvuq8Tt5hm6ROdlUNry66HJlAJCsVg2Qjf03aHushUTukLkKXa0PmXFhi4Rw9v1J+HkFbMR84RBnV4U3+96tMBQHkzBwWMUf+ucLiI0zRhBP4o/TIbk/I5yd8pZtR+NjCKBvG6UkWRqFvSfxp9SI2VD18sy2nlZ/iMXyvw+m8+Dh5fxl9jMX8xDmSfMCHrP8ZtAz1aGy8TdKbiSdySgfaOcZkye6SfHsizLsvbXD8BLbgU6DrFhAAAAAElFTkSuQmCC)
+}
+
+#environment .toolbar .button div.pause {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAAZklEQVRYhe3OsQ2AMAwFUZuZYJWMASMQRoAxsgrsZPqIxuhLFNwrLVs+MwDAL3j2YClT9LOwqEe7tqf9uYyrm9d+vrcz9XvILH+JUDVC1QhVI1SNUDVC1QhVI1SNUDVC1QgFAOCVG9LLCzCbHxggAAAAAElFTkSuQmCC)
+}
+
+#environment .toolbar .button div.info-tool {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAACu0lEQVRYhe2YwVLaUBSGvxPYuII3kDcQBlnLG+g4RpemGzYd0Dcoj0BlumEjXdp0OvYNcG0Z8A3oG4SV7Qzc00WIBQ1CEoR2hn/FhMN/P8jNPf8Bttpqq5VI4n6welbYw6SzMxetkde86T0kpgpRJNDqWWHPMulL0CNEsqFFqp4KjfFo3P70rfdzJZREAK2d7n8QpD4NBPSfleWfvoCqp4pz9fXH9xVwLgc6C6m3RqXRdO/vQmtP9g9FpI6QBzBKeV7tSkFrJ/uHYsktgGKcqy/dz8sYX9ilawQHVW80HueTbgPrtTcrdjEjQhufsr0sJMAj5hKlj0g2nUrfJoGEBaA7WA1Esij9j+79uyjGLbc7fMSUUfUQ8rXT4vmbgYIeARi4jGPecrtDFRoAolYsj0BzQat26SD4NZM8DL9UGwDBwxVXc0FFtOy/0E6SBVpud4j6x1jVLh3E9Vlw60HBi2s+5ZLYYyHov6L5oCoegKjkEq8ivocZjwZxLeaCatAehXJcc4D3x4VdIIeql+TQnwvadO/vJv08l+QhSKVTDgBCJ64HLNqjk65k4Z+FUfX+uLAbZASjEssj0Kugj6r1oLNc2KXrKMYVu5h5ap2qnaTB5FXQltsdquIAIDgXdqlXsYuZRabVs8LeDjIIDnlNeNv95ZeQH91oT7LmQDH1sIBSsYuZHZE6ivMiWCttY40aAHGmgKWDs5/uU50pgAGqg1k3KU+B9f2uJrM9XtUz1rgcFTbyzDQJ0Q6QCy1Q+qpaD5J97bR4LljtpLArHe5+Y/ottzucvhYKGgM2NuiyCtkyfxUB9s1BYTWwawGF5LBrA4VksGsFhfiwaweFeLAbCc7Nm96DscblSTqblUjW0pfj9cYS/lxYVc/I6Oh5/UZHkTBYVZywPbrxmWkaVjEr+1PtzTQZWbba6r/VHyq1eBq7VxG0AAAAAElFTkSuQmCC)
+}
+
 #environment .toolbar .button div.carry-tool {
-  background-image: url("data:image/gif;base64,R0lGODlhHQAgAPcAAAAAAP///wMDAgICAAQCAAMCAAIBAAMCARMMBAYDAgwJBQUDAgUEAxQLAxEKAxYOBhYMAxYOBxYNBxIMBxoRCxEMCBYRDBcSDgUCAAcDAQwGAhEJAxcOBxwSCxwTDBoSDCYbEwwJBxAMCQ4GABcQCQwIBQcEAxALBxkRDCQaEiIYES4iGaVxVJ5tUZpsTyIZEqRxVJxsUZtsUJZpTpdrTygdFi8jGjoqIDQnHSkfFzwtIjcpHyIaFBcTEBoSDaBuUpZpTiwfF6VxVKRwVJ1sUY9lS5ZpT5FmTY9lTI5lS41kS4xjSoNeRoNeRo5lTItjSoliSohhSYdgSYZfSH1ZRHxZQ3dVQYReR4RfR4FdRn1aRX1ZRHxZRHhXQXVUQXlXQnZVQXFSPm9QPW1PPGdKOTcoHy8iGmxOPGRJN2NHN19GNUEvJDsrITgpH2dLOl5ENFlBMllBMj0tIllBMlQ9L086LUg1KUUyJzcpH19GNl1ENFQ+MD8uJEIxJjUoHykfGEExJzcpICogGikdFmFGNlQ9L0c0KFpBM0o1KVY/MUIwJllBNDAkHC4iHAsDAAQCAAIBAAQDAgUDAwUCAAgCAAMBAAcEAwkCAAMBAAQBAAcBAAkAAAcAAAQAAAMAAAMAAAIAAAIAAAEAAAIBAQICAv///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAKUALAAAAAAdACAAAAj/AEsJHEiwoMFSAAAcXLgwIQBRFj4xnOgQQIlGeYoMqaNw4kCHkz4w2sOEBQwWLIa0mNCR4SgAPPRsATIEZUoYMIYMEeKl5cFQProMyXkSp0mcOk+yMbAQUpAlQ1EOrYn0JNUZDnwKlESBTYcYNocSTZqTahqtCDtwmlNUp1iqSN2y+LOgYEJCLGSY3JtTqsmpOM9I/AhA0ZA2OPzq/Htz7JAxgwUCoESkEIA3SBvjPCmVapwMBE3cgOLpzt6Ui29SjcpCUCSCmNyU4fDDRRsue2uKRcl5iAwMBUEd2hSHRZ9QWlD/3VwzJYtFWjUMauAiiSdDu62WPcqihQKtIgCY5NnYaQnSH1W+/ODtfAggtAh1wIjgh7cVFAlt2PwLBj7CQEsAcEZNTmjQEQBkGDXEFCMw0NAFaHiiREp8DDAQAYjchIQHCUz0yQoP7ASDBC1d9lcOTE1kCQAp5HREZD1AoNcQc/hnlwo5YSHKR3DgFAUmNhIEAAk1NdFRBSDU9MMLQRbkCBEwRBGKQJ5oUZMcO3ok5BUsGFFAQj0OkUiTBomiBk4nALBDSmEAIICWBYWwAk41XELDEFRoQuZBAGTBgh0ASPHEBm/CadAja7AgBgAIdJKloWXSgccBpEDKkACVZGJpQAA7");
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAAFNklEQVRYhe2Yz1NaVxTHP5cnaAYqBCvaRI0yRs3CCW02SSca+x9oZ7rW/gfmLyjL7mr/g3SdmYirbpIJlUySRe2Ywab+YNBgNIijgIWgDx63i+dDSJXfnenC7+oNnLnv886559xzD1zqUv9vif9y8W+/HrghFcUjhcmDxAPSAWyZP2qzj5fCyVrWagpoKZCcQOAQCM9F9hK5bE5rE7XAttQLNzU+NC0lkwg5IREOOP1qIXC127C0KPQ47VjbLFgUhau2KwCE9w55HYp4slbFD3xZ7ftq9uh3d9z2rFXxF3vM1W6jp8OO2+XE0qJUXGMpvMPah32klHO+wMbDpoNO3R+6LU3SLxCOAZeTHqedLrutKrhiqTmNpyshEukMyPzkfCC00DTQqfGhaYmc63U6HF8NXMfWZqkJ7lOljlV+XV5D1bQt3+L6QCX7qlwxOXbzJyHEj25XR9v94f6aPXieLC0KislENPG341bfVf9q5PBdOXtTpQWnxoemhRCzrnYb9272NQxYrJFrnVhbLUiEt5JtRdeM3HD6BaJt+Fonz/8Mo5hMfP6ZtSmgABZFYSd+1H+rt8O3GjnYu8iurEenxgYfiNPS88fmDtY2CyPXOpsGCeCy2wCQJjlRzq586KUpYTyaFYV7g30EI1H2kqkmIOo6S0rdIRepLOj8i/U3ErkMMNrXzatQhOB2lPSx2iRMPft1yUQ5u4rJBMJhVhQsikIinaHHacfd5WwCoq7YaXSE1B1ykcrv0ftDtwX0u11OgttRrK0W7p5mvprTiKcyDYPuHemgLR/z9YMaG/z9YZL0icpobzeWFoV4KsPC728JbkcbglRzGpuxQ6TEV6lBqSL0kD5RMSsK7i4nqWOVpyshsprGaG93Q6Bru/sACPJzlWzLgppyOZ/x3NNhByC4HSWradwd7Ct0RPUonsqwuruPlPjmA6HfGgJ98nLzHTI/AdDVbiuEytVuOzehUscq2wfJintXzWm8CkVQtVzCpGVnK0FCFf2oFMIjAGubhXDsEKCQUMUvXvxrk9jRWX0d/qKTO+7r5665truvd07gffJys+wZb6iq8mQ8vT9I0uO0l3RORssWO0ohpfQj85MStuLp870aT2UIbkeRyGXf4sbP1UBWBSpk3g96vYunM4Ujz5DhHYmc9QU2vpkPhBaQcuui9V6FIvq6eTFTLWRVoEZ9W93dJ6tpXLWWJpCeENJf4h2Bx3pOvxreOzz9KLzzL9bfNBX08VI4KZHLWU3713/xVIaspoEQfuO3qfGhaYFw9DjtJbapY9UIecKczlUsRzWDAggpvcazmjsDVs+Bl+C1tlro7SgFfb0RIX2iIqScqfWqXDXofCC0QB4PYGRriYx9PDk+9IOA/uFPWsFgJGok26Nq7kd1g0Khk0oUZ7NFKfTdDr13xeuwXinpWfeSqdOQ64OHeiBrAgVAslwMapxMEjEhhZgzKwrjI2f3NKO+Aog8k/WEvD5QWE6fqEU9JFhbLQghZgXCc+eT26nREwAztWZ5Y6CCLdC7KUNul7MAXHysLoV39FIk5dz84vovjUDWDCryehl6f3AGaiROcSe1l0wZk5BH1U5CmgqqJxRbsaNUIfzGnjUKfDAS5dlKSD8iAxvfNwMS6hiSCfACjzZjh4z2dWNt1QGfrYQKNlJKv/mjNtksSKhyUlKs1XcHb0b6Ojyxo9SI+XTakc1pJDPHCSSvhRBeX2Dj4dsP8ZNmgtY9H50cu/lcCDFR9NNMM5LmIjU0yJ0aG3wAgDQlGi0/l7rUBfoH+3tngytp5O8AAAAASUVORK5CYII=)
+}
+
+#environment .toolbar .button div.reset {
+background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACoAAAAqCAYAAADFw8lbAAABnUlEQVRYhe2XQU7CUBCG/6lsWOER8ARCKGvhBGhCdeuKHQVPINyghbBx1a00IXoCYd0a8AZwA1y5KYwLiIlKpdD3ConvW768+ftnkn9eB1AoFArFv4CiXGoY+guISt8OmYe265dlmNqEltSHwjCreiXKvZRsI2HUb/Ln2jLlADwH8LztfuJGa0YhkyZqgakJAsAYRqlL1KhZ1StEZAHI7lqbiNF1Fx2ALvfVkB4m0yg20qBpHJOAxI6uwnJigVCKOAX/REpHzWv9XuPU5NfsjYHQjtaN4oVGcLBHWLYhxGjNKGTS0CwQbkXobSK2UbOqVwhwQDgVYSiMWEZrRiFDq7BINQnEDNOD+/pu9/27JaMEYCrEUQhCUt91vZHd984Y3BKhtwmh46nT99tBEGTBPBSpC0iYo73BeGa7fpkZTTDPRelKe0I7rmd/gLMAP4nQk/rWr8N2JSJsifzhd11v9MHLHMDWvhqJrSJfo4yCHBiTXesT35m6j+M32/Xyu4btYMtdx/XsYLHIMR3hKvKT3mA8A9A+pAeFQqFQHBmfjPR/IX86tO4AAAAASUVORK5CYII=)
 }
 
 .xAxisLabel {
