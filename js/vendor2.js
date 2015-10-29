@@ -47374,7 +47374,7 @@ module.exports = {
         e: "e"
       }
     }
-  
+
     and an object of options
     options = {
       a: "A",
@@ -47383,10 +47383,10 @@ module.exports = {
         f: "F"
       }
     }
-  
+
     this will set defaults for any undefined values, included those
     in nested objects:
-  
+
     setDefaults(options, defaultOptions) = {
       a: "A",
       b: "b",
@@ -47678,9 +47678,9 @@ module.exports = Agent = (function() {
   /*
     Creates one or more offspring, depending on the min- and max- offspring
     properties, and places them in the environment.
-  
+
     Returns the array of offspring.
-  
+
     Only asexual for now
   */
 
@@ -48811,7 +48811,7 @@ module.exports = Environment = (function(_super) {
       x: ExtMath.randomInt(width) + left,
       y: ExtMath.randomInt(height) + top
     };
-    while (avoidBarriers && this.isInBarrier(point)) {
+    while (avoidBarriers && this.isInBarrier(point.x, point.y)) {
       point = {
         x: ExtMath.randomInt(width) + left,
         y: ExtMath.randomInt(height) + top
@@ -49729,7 +49729,7 @@ module.exports = StateMachine = (function() {
 
   /*
     Add a named state with a set of event handlers.
-  
+
     e.g.
       addState "addingAgents",
         enter: ->
@@ -51353,6 +51353,7 @@ module.exports = EnvironmentView = (function() {
 
 ;
 //# sourceMappingURL=app.js.map
+
 ;(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jade = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
