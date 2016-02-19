@@ -1068,7 +1068,7 @@ $(function() {
     chart: {
       options: ["diabetes", "weight", "risk", "diabetesTime"]
     },
-    timeLimit: 30,
+    timeLimit: 0,
     timeLimitTitle: "Times up!",
     timeLimitMessage: ["What happened to the rats in the pens?", "Hit reset to run the model again."]
   };
