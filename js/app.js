@@ -786,7 +786,7 @@ updateCharts = function() {
   if (((chart1 != null ? chart1._timeBased : void 0) && updateTimeCharts) || (!(chart1 != null ? chart1._timeBased : void 0) && updateStaticCharts)) {
     chart1.update();
   }
-  if (((chart2 != null ? chart2._timeBased : void 0) && updateTimeCharts) || (!(chart2 != null ? chart2._timeBased : void 0) && updateStaticCharts)) {
+  if (chart2 && (((chart2 != null ? chart2._timeBased : void 0) && updateTimeCharts) || (!(chart2 != null ? chart2._timeBased : void 0) && updateStaticCharts))) {
     return chart2.update();
   }
 };
