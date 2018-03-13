@@ -1552,7 +1552,7 @@ module.exports = new Species({
             scale: 0.4,
             anchor: {
               x: 0.5,
-              y: 0.7
+              y: 0.9
             }
           },
           useIf: function(agent) {
@@ -1570,7 +1570,7 @@ module.exports = new Species({
             scale: 0.4,
             anchor: {
               x: 0.5,
-              y: 0.7
+              y: 0.9
             }
           },
           useIf: function(agent) {
@@ -1588,7 +1588,7 @@ module.exports = new Species({
             scale: 0.4,
             anchor: {
               x: 0.5,
-              y: 0.7
+              y: 0.9
             }
           },
           useIf: function(agent) {
@@ -1600,7 +1600,7 @@ module.exports = new Species({
             scale: 0.4,
             anchor: {
               x: 0.5,
-              y: 0.7
+              y: 0.9
             }
           },
           useIf: function(agent) {
