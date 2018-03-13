@@ -628,6 +628,9 @@ window.model = {
       this.stopDate = Math.floor(window.CONFIG.timeLimit * model.targetFPS());
       this.timeGraphInterval = Math.floor(this.stopDate / 29);
     }
+    if (!this.timeGraphInterval) {
+      this.timeGraphInterval = 20
+    }
     return resetAndDrawCharts();
   },
   addRats: function() {
