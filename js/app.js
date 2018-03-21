@@ -711,7 +711,7 @@ window.model = {
     var loc, rat;
     loc = this.isFieldModel ? this.locations.all : this.locations.w;
     rat = this.sandratSpecies.createAgent(traits);
-    rat.set('age', 20 + (Math.floor(Math.random() * 40)));
+    rat.set('age', 40 + (Math.floor(Math.random() * 40)));
     rat.setLocation(env.randomLocationWithin(loc.x, loc.y, loc.width, loc.height, true));
     return this.env.addAgent(rat);
   },
