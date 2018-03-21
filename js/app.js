@@ -278,6 +278,14 @@ module.exports = Chart = Chart = (function() {
     return delete this._guides[id];
   };
 
+  Chart.prototype.endAllPeriods = function() {
+    var ids = Object.keys(this._guides);
+    var _this = this;
+    ids.forEach(function(id) {
+      delete _this._guides[id]
+    });
+  };
+
   Chart.prototype._extendOpenPeriods = function() {
     var guide, id, leftDate, _i, _len, _ref, _ref1, _ref2, _ref3;
     if (!this._timeBased) {
@@ -941,14 +949,32 @@ processConfig = function() {
   updateTimeLimitPopup();
   return updateDateString();
 };
-
+chart1PeriodId = null;
+chart2PeriodId = null;
 setChartType = function(chart, type, n) {
   if (chart != null) {
     chart.setData(type);
-  }
-  if (chart != null) {
     chart.reset();
+
+    if (chart.location === "ne") {
+      adding = $('.chow-toggle.north-east').hasClass('on');
+      if (adding) {
+        chart1PeriodId = 'chow-' + Date.now();
+        chart.startPeriod(chart1PeriodId);
+      } else {
+        chart.endAllPeriods();
+      }
+    } else if (chart.location === "se") {
+      adding = $('.chow-toggle.south-east').hasClass('on');
+      if (adding) {
+        chart2PeriodId = 'chow-' + Date.now();
+        chart.startPeriod(chart2PeriodId);
+      } else {
+        chart.endAllPeriods();
+      }
+    }
   }
+
   if (type[0].timeBased) {
     return $("#container-" + n + " .xAxisLabel").show();
   } else {
@@ -993,14 +1019,14 @@ $(function() {
         chart1PeriodId = 'chow-' + Date.now();
         return chart1 != null ? chart1.startPeriod(chart1PeriodId) : void 0;
       } else {
-        return chart1 != null ? chart1.endPeriod(chart1PeriodId) : void 0;
+        return chart1 != null ? chart1.endAllPeriods() : void 0;
       }
     } else {
       if (adding) {
         chart2PeriodId = 'chow-' + Date.now();
         return chart2 != null ? chart2.startPeriod(chart2PeriodId) : void 0;
       } else {
-        return chart2 != null ? chart2.endPeriod(chart2PeriodId) : void 0;
+        return chart2 != null ? chart2.endAllPeriods() : void 0;
       }
     }
   };
