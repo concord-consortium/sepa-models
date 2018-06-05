@@ -761,6 +761,7 @@ window.model = {
 
 Events.addEventListener(Environment.EVENTS.RESET, function() {
   model.setupEnvironment();
+  updateClock();
   $('.time-limit-dialog').fadeOut(300);
   $('.chow-toggle').removeClass('on');
   return resetAndDrawCharts();
@@ -773,11 +774,19 @@ Events.addEventListener(Environment.EVENTS.START, function() {
 Events.addEventListener(Environment.EVENTS.STEP, function() {
   model.countRatsInAreas();
   updateCharts();
+  updateClock();
   if (model.stopDate > 0 && model.env.date === model.stopDate) {
     model.env.stop();
     return model._timesUp();
   }
 });
+
+updateClock = function() {
+  var el = document.getElementById("week-number");
+  if (el) {
+    el.innerHTML = Math.floor(model.env.date / 20) + 1;
+  }
+};
 
 chart1 = null;
 

@@ -92,6 +92,16 @@ body {
   margin-left: 4px;
 }
 
+#timer {
+  position: absolute;
+  top: 14px;
+  left: 500px;
+  width: 100px;
+  border: 2px solid;
+  padding: 4px;
+  text-align: center;
+}
+
 .time-limit-dialog {
   z-index: 1000;
   display: none;
