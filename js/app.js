@@ -135,9 +135,12 @@ module.exports = Chart = Chart = (function() {
       this._timeBased = true;
       this._timeProp = this.properties[0];
       _results = [];
-      for (i = _i = 1; _i <= 30; i = ++_i) {
+      for (i = _i = 1; _i <= 41; i = ++_i) {
         _results.push(this._data.push({
           category: i,
+          count: this.model.counts_history[i] && this.model.counts_history[i][this.location] ? this.model.counts_history[i][this.location][this._timeProp.property] : -2,
+          base: -2,
+          color: 'hsl(0,100%,85%)',
           description: this._timeProp.description
         }));
       }
@@ -151,7 +154,6 @@ module.exports = Chart = Chart = (function() {
         _results1.push(this._data.push({
           category: prop.title,
           description: prop.description,
-          count: 0,
           property: prop.property
         }));
       }
@@ -162,7 +164,7 @@ module.exports = Chart = Chart = (function() {
   Chart.prototype.reset = function() {
     this.setData(this.properties);
     this.parent.innerHTML = "";
-    this._time = 0;
+    this._time = Math.floor(this.model.env.date / 20);
     this._drawChart();
     return this.update();
   };
@@ -180,7 +182,7 @@ module.exports = Chart = Chart = (function() {
         column.count = newData[column.property];
       }
     } else {
-      timeChartTime = this._time;
+      timeChartTime = Math.floor(this.model.env.date / 20) + 1;
       datum = helpers.clone(this._data[0]);
       datum.category = timeChartTime;
       datum.count = newData[this._timeProp.property];
@@ -209,7 +211,14 @@ module.exports = Chart = Chart = (function() {
     opts = helpers.clone(this._defaultChartProps);
     if (this._timeBased) {
       opts.valueAxes[0].title = this._timeProp.yAxis;
-      opts.valueAxes[0].minimum = -2;
+      opts.valueAxes[0].minimum = -1;
+      opts.categoryAxis.labelFunction = function(valueText, serialDataItem, categoryAxis) {
+        var val = parseInt(serialDataItem.category);
+        if (val === 1 || val % 5 === 0) {
+          return serialDataItem.category;
+        }
+        return "";
+      }
     }
     opts.dataProvider = this._data;
     return this.chart = AmCharts.makeChart(this.parent, opts);
@@ -601,12 +610,13 @@ window.model = {
   },
   countRatsInAreas: function() {
     if (this.isFieldModel) {
-      return this.current_counts.all = this._countRats(this.locations.all);
+      this.current_counts.all = this._countRats(this.locations.all);
     } else {
       this.current_counts.w = this._countRats(this.locations.w);
       this.current_counts.ne = this._countRats(this.locations.ne);
-      return this.current_counts.se = this._countRats(this.locations.se);
+      this.current_counts.se = this._countRats(this.locations.se);
     }
+    this.counts_history[Math.floor(model.env.date / 20)+1] = helpers.clone(this.current_counts);
   },
   setupEnvironment: function() {
     var col, row, speciesType, _i, _j, _ref1, _ref2, _ref3, _ref4;
@@ -632,6 +642,7 @@ window.model = {
         total: 0
       }
     };
+    this.counts_history = [];
     if (((_ref4 = window.CONFIG) != null ? _ref4.timeLimit : void 0) != null) {
       this.stopDate = Math.floor(window.CONFIG.timeLimit * model.targetFPS());
       this.timeGraphInterval = Math.floor(this.stopDate / 29);
@@ -1210,8 +1221,6 @@ $(function() {
 var genes,
   __hasProp = {}.hasOwnProperty,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-
-console.log("hi?");
 
 BioLogica.Genetics.prototype.getRandomAllele = function(exampleOfGene) {
   var allelesOfGene, curMax, gene, i, rand, totWeights, weight, _allelesOfGene, _i, _len, _ref, _weightsOfGene;

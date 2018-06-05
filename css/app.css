@@ -175,8 +175,9 @@ span.allele.blue {
 }
 
 #field-chart, #field-chart-2 {
-  width: 339px;
+  width: 347px;
   height: 217px;
+  margin-left: -10px;
 }
 
 .chow-toggle {
@@ -263,7 +264,7 @@ span.allele.blue {
 .chart-type-selector select {
   position: absolute;
   top: -209px;
-  left: 68px;
+  left: 58px;
   width: 210px;
   font-size: 15px;
 }
