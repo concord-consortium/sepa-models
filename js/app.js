@@ -338,7 +338,7 @@ env = new Environment({
   imgPath: "images/environments/pens.png",
   wrapEastWest: false,
   wrapNorthSouth: false,
-  barriers: [[170, 0, 55, 450], [220, 200, 380, 50]]
+  barriers: [[170, 0, 55, 450], [220, 220, 380, 50], [0, 0, 600, 25]]
 });
 
 EnvRules.init(env);
