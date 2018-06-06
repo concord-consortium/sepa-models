@@ -174,12 +174,6 @@ span.allele.blue {
   background-color: blue;
 }
 
-#field-chart, #field-chart-2 {
-  width: 347px;
-  height: 217px;
-  margin-left: -10px;
-}
-
 .chow-toggle {
   z-index: 1000;
   display: block;
@@ -257,6 +251,34 @@ span.allele.blue {
   font-weight: bold;
 }
 
+#charts {
+  position: absolute;
+  left: 592px;
+  top: 0;
+  width: 347px;
+  height: 434px;
+}
+
+#charts.big-snapshot {
+  left: 0;
+  width: 800px;
+  height: 1000px;
+  background-color: white;
+}
+
+.chart-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 50%;
+}
+
+#field-chart, #field-chart-2 {
+  width: 100%;
+  height: 100%;
+  margin-left: -10px;
+}
+
 .chart-type-selector {
   position: relative;
 }
@@ -267,6 +289,22 @@ span.allele.blue {
   left: 58px;
   width: 210px;
   font-size: 15px;
+}
+
+.big-snapshot .chart-type-selector {
+  display: none;
+}
+
+.chart-type-label {
+  position: absolute;
+  display: none;
+  top: 11px;
+  width: 100%;
+  text-align: center;
+}
+
+.big-snapshot .chart-type-label {
+  display: block;
 }
 
 .bubble .content .agent {

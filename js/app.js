@@ -800,7 +800,6 @@ updateClock = function() {
 };
 
 chart1 = null;
-
 chart2 = null;
 
 resetAndDrawCharts = function() {
@@ -821,6 +820,11 @@ updateCharts = function() {
     return chart2.update();
   }
 };
+
+window.redrawCharts = function() {
+  chart1._drawChart();
+  chart2._drawChart();
+}
 
 chartTypes = {
   diabetes: [

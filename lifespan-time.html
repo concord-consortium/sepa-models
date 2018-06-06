@@ -5,7 +5,9 @@
     <title>Sand Rats Long-Life Model</title>
     <link rel="stylesheet" href="css/vendor.css">
     <link rel="stylesheet" href="css/app.css">
-    <script src="js/vendor2.js"></script>
+    <script src="js/vendor2.js" type='text/javascript'></script>
+    <script src="js/shutterbug.js" type='text/javascript'></script>
+    <script src="js/shutterbug-config.js" type='text/javascript'></script>
     <!-- model files here-->
     <script>
       window.CONFIG = {
@@ -49,18 +51,6 @@
       <a href="javascript:void(0);" class="chow-toggle south-east"></a>
     </div>
     <div id="controls" style="display: inline-block;">
-      <div class="chart-container" style="border-bottom: 3px solid black; position: absolute; left: 592px; top: 0px;">
-        <div id="field-chart"></div>
-        <div class="chart-type-selector">
-          <select id="chart-1-selector">
-            <option selected="selected" value="diabetesTime">Diabetes over time</option>
-            <option value="diabetes">Sand Rats with Diabetes</option>
-            <option value="weight">Weight of Sand Rats</option>
-            <option value="risk">Risk of Diabetes</option>
-          </select>
-        </div>
-      </div>
-
       <div id="toolbar-options">
         <div>
           <input type="checkbox" id="view-prone-check" value="prone"> Show diabetes risk <img style="width: 19px;" src="images/ui/circle_yellow.png"><br>
@@ -76,15 +66,31 @@
         </div>
       </div>
 
-      <div class="chart-container" style="position: absolute; left: 592px; top: 230px;">
-        <div id="field-chart-2"></div>
-        <div class="chart-type-selector">
-          <select id="chart-2-selector">
-            <option selected="selected" value="diabetesTime">Diabetes over time</option>
-            <option value="diabetes">Sand Rats with Diabetes</option>
-            <option value="weight">Weight of Sand Rats</option>
-            <option value="risk">Risk of Diabetes</option>
-          </select>
+      <div id="charts">
+        <div class="chart-container" style="border-bottom: 3px solid black;">
+          <div id="field-chart"></div>
+          <div class="chart-type-selector">
+            <select id="chart-1-selector">
+              <option selected="selected" value="diabetesTime">Diabetes over time</option>
+              <option value="diabetes">Sand Rats with Diabetes</option>
+              <option value="weight">Weight of Sand Rats</option>
+              <option value="risk">Risk of Diabetes</option>
+            </select>
+          </div>
+          <div id="chart-1-type-label" class="chart-type-label"></div>
+        </div>
+
+        <div class="chart-container" style="top: 50%;">
+          <div id="field-chart-2"></div>
+          <div class="chart-type-selector">
+            <select id="chart-2-selector">
+              <option selected="selected" value="diabetesTime">Diabetes over time</option>
+              <option value="diabetes">Sand Rats with Diabetes</option>
+              <option value="weight">Weight of Sand Rats</option>
+              <option value="risk">Risk of Diabetes</option>
+            </select>
+          </div>
+          <div id="chart-2-type-label" class="chart-type-label"></div>
         </div>
       </div>
     </div>
@@ -93,6 +99,5 @@
       <h3 class="title">Time's up!</h3>
       <div class="content">Hit reset to run the model again.</div>
     </div>
-
   </body>
 </html>
