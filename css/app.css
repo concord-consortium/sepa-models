@@ -261,8 +261,10 @@ span.allele.blue {
 
 #charts.big-snapshot {
   left: 0;
-  width: 800px;
-  height: 1000px;
+  width: 80vh;
+  height: 100vh;
+  max-width: 800px;
+  max-height: 1000px;
   background-color: white;
 }
 
@@ -301,6 +303,7 @@ span.allele.blue {
   top: 11px;
   width: 100%;
   text-align: center;
+  background-color: white;
 }
 
 .big-snapshot .chart-type-label {
