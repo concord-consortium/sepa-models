@@ -1,9 +1,16 @@
-var MAX_WIDTH = 1500;
-var MAX_HEIGHT = 800;
+var MAX_WIDTH = 1000;
+var MAX_HEIGHT = 533;
 
-function sizeContentsToWindow() {
-  var modelWidth = $(".toolbar").width();
-  var modelHeight = $("#environment").height() + $(".toolbar").height();
+function sizeContentsToWindow(evt, graphsOnly) {
+  var modelHeight, modelWidth;
+
+  if (graphsOnly) {
+    modelWidth = $("#charts").width();
+    modelHeight = $("#charts").height();
+  } else {
+    modelWidth = $(".toolbar").width();
+    modelHeight = $("#environment").height() + $(".toolbar").height();
+  }
 
   if (modelWidth === 0 || modelHeight === 0) {
     window.setTimeout(sizeContentsToWindow, 200);
@@ -16,19 +23,23 @@ function sizeContentsToWindow() {
   var desiredWidth = Math.min(pageWidth, MAX_WIDTH);
   var desiredHeight = Math.min(pageHeight, MAX_HEIGHT);
 
+  console.log(graphsOnly, modelHeight, desiredHeight, modelWidth, desiredWidth)
+
   var smallestRatio = Math.min(desiredWidth/modelWidth, desiredHeight/modelHeight);
+  console.log(smallestRatio);
 
-  $("body").css({'transform': 'scale('+smallestRatio+')', 'transform-origin': '0 0'});
+  var transformation = 'scale('+smallestRatio+')';
 
-  if (smallestRatio > 1) {
-    var offset = 20 * (smallestRatio - 1) * 5;
-    $("body").css({'transform': 'translate('+offset+'px, '+offset+'px)'});
+  if (smallestRatio > 1 && !graphsOnly) {
+    var offset = 300 * (smallestRatio - 1);
+    transformation += ' translate('+offset+'px, '+offset+'px)';
   }
+
+  $("body").css({'transform': transformation, 'transform-origin': '0 0'});
 }
 
 $().ready(sizeContentsToWindow);
 $(window).resize(sizeContentsToWindow);
-$(window).on('shutterbug-asyouwere', sizeContentsToWindow);
 
 
 /*!
