@@ -874,8 +874,8 @@ defaultChartTypes = ["diabetes", "weight", "risk", "diabetesTime"];
 
 updatePulldowns = function() {
   var authoredOptions, createSelectOption, option, options, _i, _len, _ref1, _ref2;
-  $('#chart-1-selector').html("");
-  $('#chart-2-selector').html("");
+  // $('#chart-1-selector').html("");
+  // $('#chart-2-selector').html("");
   options = {
     diabetes: "Sand Rats with Diabetes",
     weight: "Weight of Sand Rats",
@@ -890,13 +890,13 @@ updatePulldowns = function() {
   createSelectOption = function(opt) {
     return $("<option value='" + opt + "'>" + options[opt] + "</option>");
   };
-  for (_i = 0, _len = authoredOptions.length; _i < _len; _i++) {
-    option = authoredOptions[_i];
-    $('#chart-1-selector').append(createSelectOption(option));
-    $('#chart-2-selector').append(createSelectOption(option));
-  }
-  setChartType(chart1, chartTypes[authoredOptions[0]], 1);
-  setChartType(chart2, chartTypes[authoredOptions[0]], 2);
+  // for (_i = 0, _len = authoredOptions.length; _i < _len; _i++) {
+  //   option = authoredOptions[_i];
+  //   $('#chart-1-selector').append(createSelectOption(option));
+  //   $('#chart-2-selector').append(createSelectOption(option));
+  // }
+  setChartType(chart1, chartTypes[$('#chart-1-selector').val()], 1);
+  setChartType(chart2, chartTypes[$('#chart-2-selector').val()], 2);
   if (authoredOptions.length < 2) {
     $('#chart-1-selector').hide();
     return $('#chart-2-selector').hide();
@@ -1011,13 +1011,13 @@ $(function() {
     model.run();
     if ($('#field-chart').length > 0) {
       chart1 = new Chart(model, 'field-chart', graph1Location);
-      type = ((_ref1 = window.CONFIG) != null ? (_ref2 = _ref1.chart) != null ? _ref2.options : void 0 : void 0) != null ? window.CONFIG.chart.options[0] : defaultChartTypes[0];
+      type = $('#chart-1-selector').val() ? $('#chart-1-selector').val() : ((_ref1 = window.CONFIG) != null ? (_ref2 = _ref1.chart) != null ? _ref2.options : void 0 : void 0) != null ? window.CONFIG.chart.options[0] : defaultChartTypes[0];
       chart1.setData(chartTypes[type]);
       chart1.reset();
     }
     if ($('#field-chart-2').length > 0) {
       chart2 = new Chart(model, 'field-chart-2', 'se');
-      type = ((_ref3 = window.CONFIG) != null ? (_ref4 = _ref3.chart) != null ? _ref4.options : void 0 : void 0) != null ? window.CONFIG.chart.options[0] : defaultChartTypes[0];
+      type = $('#chart-2-selector').val() ? $('#chart-2-selector').val() : ((_ref3 = window.CONFIG) != null ? (_ref4 = _ref3.chart) != null ? _ref4.options : void 0 : void 0) != null ? window.CONFIG.chart.options[0] : defaultChartTypes[0];
       chart2.setData(chartTypes[type]);
       return chart2.reset();
     }
