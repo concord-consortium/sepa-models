@@ -51265,12 +51265,13 @@ module.exports = EnvironmentView = (function() {
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       eventName = _ref[_i];
       _results.push(this.view.addEventListener(eventName, function(evt) {
+        var scale = document.getElementById("environment").getBoundingClientRect().width / this.width;
         if (evt instanceof TouchEvent) {
-          evt.envX = evt.changedTouches[0].pageX - _this.view.offsetLeft;
-          evt.envY = evt.changedTouches[0].pageY - _this.view.offsetTop;
+          evt.envX = (evt.changedTouches[0].pageX - _this.view.offsetLeft) / scale;
+          evt.envY = (evt.changedTouches[0].pageY - _this.view.offsetTop) / scale;
         } else {
-          evt.envX = evt.pageX - _this.view.offsetLeft;
-          evt.envY = evt.pageY - _this.view.offsetTop;
+          evt.envX = (evt.pageX - _this.view.offsetLeft) / scale;
+          evt.envY = (evt.pageY - _this.view.offsetTop) / scale;
         }
         return _this.environment.send(evt.type, evt);
       }));
