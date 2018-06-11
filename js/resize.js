@@ -1,5 +1,5 @@
-var MAX_WIDTH = 1000;
-var MAX_HEIGHT = 533;
+// var MAX_WIDTH = 1500;
+// var MAX_HEIGHT = 750;
 
 function sizeContentsToWindow(evt, graphsOnly) {
   var modelHeight, modelWidth;
@@ -20,20 +20,20 @@ function sizeContentsToWindow(evt, graphsOnly) {
   var pageWidth = window.innerWidth;
   var pageHeight = window.innerHeight;
 
-  var desiredWidth = Math.min(pageWidth, MAX_WIDTH);
-  var desiredHeight = Math.min(pageHeight, MAX_HEIGHT);
+  // var desiredWidth = Math.min(pageWidth, MAX_WIDTH);
+  // var desiredHeight = Math.min(pageHeight, MAX_HEIGHT);
 
-  console.log(graphsOnly, modelHeight, desiredHeight, modelWidth, desiredWidth)
+  // console.log(graphsOnly, modelHeight, desiredHeight, modelWidth, desiredWidth)
 
-  var smallestRatio = Math.min(desiredWidth/modelWidth, desiredHeight/modelHeight);
+  var smallestRatio = Math.min(pageWidth/modelWidth, pageHeight/modelHeight);
   console.log(smallestRatio);
 
   var transformation = 'scale('+smallestRatio+')';
 
-  if (smallestRatio > 1 && !graphsOnly) {
-    var offset = 300 * (smallestRatio - 1);
-    transformation += ' translate('+offset+'px, '+offset+'px)';
-  }
+  // if (smallestRatio > 1 && !graphsOnly) {
+  //   var offset = Math.min(50, 300 * (smallestRatio - 1));
+  //   transformation += ' translate('+offset+'px, '+offset+'px)';
+  // }
 
   $("body").css({'transform': transformation, 'transform-origin': '0 0'});
 }

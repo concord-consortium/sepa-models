@@ -270,6 +270,7 @@ span.allele.blue {
   position: absolute;
   top: 0;
   width: 100%;
+  max-width: 700px;
   height: 50%;
 }
 
